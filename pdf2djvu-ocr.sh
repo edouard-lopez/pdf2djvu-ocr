@@ -10,10 +10,15 @@
 #   pdfsandwich tesseract
 #
 
-pattern="${@:-"./*.pdf"}"
+pattern="${@:-"./*.pdf"}" # default pattern to use
 THREAD_COUNT=4
-RES=300
+RES=300 # default resolution
 
+
+# Create new PDF file (to the filesystem) after doing an OCR recognition
+# @param    {string} source filename
+# @param    {string} destination filename
+# @return   {void}
 function addOcr2Pdf() {
     f="$1"
     fpdfocr="$2"
@@ -29,6 +34,10 @@ function addOcr2Pdf() {
     "$f"
 }
 
+# Convert PDF+OCR into B&W Djvu file (to the filesystem)
+# @param    {string} source filename
+# @param    {string} destination filename
+# @return   {void}
 function convert2djvu() {
     fpdfocr="$1"
     fdjvu="$2"
@@ -44,6 +53,11 @@ function convert2djvu() {
 }
 
 
+# Entry point:
+#   1. transliterate filename
+#   2. add OCR text,
+#   3. convert to DjVu
+# @return {void}
 function run() {
     # printf "pattern: %s\n" "$(eval echo "$pattern")"
 
