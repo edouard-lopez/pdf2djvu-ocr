@@ -4,7 +4,7 @@
 #
 # USAGE
 #   pdf2djvu-ocr
-#   pdf2djvu-ocr /path/or/pattern
+#   pdf2djvu-ocr /path/or/pattern/**/*.pdf
 #
 # DEPENDENCIES
 #   pdfsandwich tesseract pdf2djvu
