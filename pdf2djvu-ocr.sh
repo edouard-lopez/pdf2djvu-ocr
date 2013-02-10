@@ -7,7 +7,7 @@
 #   pdf2djvu-ocr /path/or/pattern
 #
 # DEPENDENCIES
-#   pdfsandwich tesseract
+#   pdfsandwich tesseract pdf2djvu
 #
 
 
