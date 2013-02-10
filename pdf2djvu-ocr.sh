@@ -3,7 +3,7 @@
 #   Convert PDF file to DjVu+OCR
 #
 # USAGE
-#   pdf2djvu-ocr
+#   pdf2djvu-ocr # will look for ./*.pdf by default
 #   pdf2djvu-ocr /path/or/pattern/**/*.pdf
 #
 # DEPENDENCIES
