@@ -6,7 +6,7 @@ This Script follow the [discussion on SuperUser](http://superuser.com/q/280530/1
 
 ## Dependencies
 
-* (optionnal) [stylerc](https://github.com/edouard-lopez/stylerc): bash output style ;
+* [stylerc](https://github.com/edouard-lopez/stylerc): bash output style ;
 * [pdfsandwich](http://www.tobias-elze.de/pdfsandwich/) ;
 * [tesseract-ocr](https://code.google.com/p/tesseract-ocr/) ;
 * [pdf2djvu](http://freecode.com/projects/pdf2djvu).
