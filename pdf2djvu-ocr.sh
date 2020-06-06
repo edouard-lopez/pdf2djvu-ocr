@@ -11,7 +11,7 @@
 #
 
 
-. "$STYLERC" # include style
+source "${STYLERC:-./stylerc}" # include style
 
 
 pattern=("${@:-"./*.pdf"}") # default pattern to use
