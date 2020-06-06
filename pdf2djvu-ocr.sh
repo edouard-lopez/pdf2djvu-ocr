@@ -17,7 +17,7 @@ source "${STYLERC:-./stylerc}" # include style
 pattern=("${@:-"./*.pdf"}") # default pattern to use
 THREAD_COUNT=4 # number of threads to use
 FORCE='true' # force steps
-RES=300 # default resolution
+RESOLUTION=300 # default resolution
 
 
 # Create new PDF file (to the filesystem) after doing an OCR recognition
@@ -33,7 +33,7 @@ function addOcr2Pdf() {
 
         /usr/bin/pdfsandwich -sloppy_text \
             -lang fra \
-            -resolution "$RES"x"$RES" \
+            -resolution "$RESOLUTION" \
             -nthreads "$THREAD_COUNT" \
             -o "$fpdfocr" \
             -quiet \
@@ -59,7 +59,7 @@ function convert2djvu() {
             --bg-subsample=6 \
             --jobs="$THREAD_COUNT" \
             --fg-colors=web \
-            --dpi="$RES" \
+            --dpi="$RESOLUTION" \
             --quiet \
             -o "$fdjvu" \
         "$fpdfocr"
@@ -96,7 +96,7 @@ function run() {
         # printf "%s OCR filename: %s\n" "$_i" "$(_value "$fpdfocr")"
         printf "%s DjVu filename: %s\n" "$_i" "$(_value "$fdjvu")"
 
-        # RES="$(getResolution "$f")"
+        # RESOLUTION="$(getResolution "$f")"
 
         # generates PDF with OCR text
         addOcr2Pdf "$f" "$fpdfocr"
