@@ -25,22 +25,22 @@ RESOLUTION=300 # default resolution
 # @param    {string}    destination filename
 # @return   {void}
 function addOcr2Pdf() {
-    local f="$1"
-    local fpdfocr="$2"
+    local file="$1"
+    local pdf_with_ocr="$2"
 
-    if [[ ! -e "$fpdfocr" || $FORCE == 'true' ]]; then
-        printf "%s OCRing PDF\n" "$_i"
+    if [[ ! -e "$pdf_with_ocr" || $FORCE == 'true' ]]; then
+        echo "OCRing PDF"
 
         /usr/bin/pdfsandwich -sloppy_text \
             -lang fra \
             -resolution "$RESOLUTION" \
             -nthreads "$THREAD_COUNT" \
-            -o "$fpdfocr" \
+            -o "$pdf_with_ocr" \
             -quiet \
-        "$f"
+        "$file"
             # -verbose \
     else
-        printf "\t%s Skipping PDF+OCR file already existing\n" "$_i"
+        printf "\tSkipping PDF+OCR file already existing\n"
     fi
 }
 
@@ -49,11 +49,11 @@ function addOcr2Pdf() {
 # @param    {string}    destination filename
 # @return   {void}
 function convert2djvu() {
-    local fpdfocr="$1"
-    local fdjvu="$2"
+    local pdf_with_ocr="$1"
+    local djvu_file="$2"
 
-    if [[ ! -e "$fdjvu" || $FORCE == 'true' ]]; then # we need a source
-        printf "%s Converting to DjVu\n" "$_i"
+    if [[ ! -e "$djvu_file" || $FORCE == 'true' ]]; then # we need a source
+        echo "Converting to DjVu"
 
         pdf2djvu \
             --bg-subsample=6 \
@@ -61,10 +61,10 @@ function convert2djvu() {
             --fg-colors=web \
             --dpi="$RESOLUTION" \
             --quiet \
-            -o "$fdjvu" \
-        "$fpdfocr"
+            -o "$djvu_file" \
+        "$pdf_with_ocr"
     else
-        printf "\t%s Skipping DjVu file already existing\n" "$_i"
+        printf "\tSkipping DjVu file already existing\n"
     fi
 }
 
@@ -84,27 +84,20 @@ function getResolution() {
 # @return {void}
 function run() {
     local pattern=("$@")
-    # printf '%s\n' "${#pattern[@]}" # array size
-    # printf '%s\n' "${pattern[@]}" # each item of the array
-
-    for f in "${pattern[@]}"
+    for file in "${pattern[@]}"
     do
-        local fpdfocr="${f/.pdf/.pdf.ocr}"
-        local fdjvu="${fpdfocr/.pdf.ocr/.djvu}"
+        local pdf_with_ocr="${file/.pdf/.pdf.ocr}"
+        local djvu_file="${pdf_with_ocr/.pdf.ocr/.djvu}"
 
-        # printf "%s filename: %s\n" "$_i" "$(_value "$f")"
-        # printf "%s OCR filename: %s\n" "$_i" "$(_value "$fpdfocr")"
-        printf "%s DjVu filename: %s\n" "$_i" "$(_value "$fdjvu")"
-
-        # RESOLUTION="$(getResolution "$f")"
+        printf "DjVu filename: %s\n" "$(_value "$djvu_file")"
 
         # generates PDF with OCR text
-        addOcr2Pdf "$f" "$fpdfocr"
+        addOcr2Pdf "$file" "$pdf_with_ocr"
 
         # creates DjVu files from PDF files
-        convert2djvu "$fpdfocr" "$fdjvu"
+        convert2djvu "$pdf_with_ocr" "$djvu_file"
 
-        printf "%s\n" "--"
+        printf "\n--"
     done
 }
 
